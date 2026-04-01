@@ -14,9 +14,11 @@ Seva Sarthak is a high-fidelity, interactive digital twin platform designed to o
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: React.js, Vanilla CSS (Design System), SVG (High-Performance Rendering)
-- **Backend/Sim**: Python (Data Processing, Physics Modeling)
-- **APIs**: Google Gemini (AI Context Analysis)
+- **Frontend**: React 19, Vite, Leaflet, React-Leaflet, Lucide-React
+- **Styling**: Vanilla CSS (Custom Design System with Light/Dark Mode)
+- **Physics Engine**: Physics-based Micro-Simulation Engine (Custom)
+- **AI Integration**: Google Gemini API for optimized traffic analysis
+- **Data Analytics**: Python, Historical Bengaluru Traffic Dataset
 - **Database**: MongoDB Atlas
 
 ## 📂 Project Structure
