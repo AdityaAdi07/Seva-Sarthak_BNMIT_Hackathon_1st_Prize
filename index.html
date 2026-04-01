@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeva Sarthak | Unified City Operations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b1121;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #10b981;
+            --secondary: #0ea5e9;
+            --accent: #8b5cf6;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(11, 17, 33, 0.8);
+        }
+
+        body.light-theme {
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --header-bg: rgba(248, 250, 252, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* Abstract Background Elements */
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: rgba(16, 185, 129, 0.25); }
+        .blob-2 { top: 20%; right: -15%; width: 600px; height: 600px; background: rgba(14, 165, 233, 0.25); animation-delay: 2s; }
+        .blob-3 { bottom: -20%; left: 10%; width: 700px; height: 700px; background: rgba(139, 92, 246, 0.2); animation-delay: 5s; }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo i {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav.nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav.nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav.nav-links a:hover {
+            color: var(--text-color);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--card-bg);
+        }
+
+        /* Hero Section */
+        section {
+            padding: 6rem 5% 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 90vh;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pill {
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 3.5rem;
+        }
+
+        /* Modules */
+        .panels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .panel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .panel-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            opacity: 0.5; transition: opacity 0.3s;
+        }
+
+        .traffic-card::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .crowd-card::before { background: linear-gradient(90deg, var(--accent), var(--secondary)); }
+
+        .panel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body.light-theme .panel-card:hover { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.15); }
+        .panel-card:hover::before { opacity: 1; }
+
+        .icon-wrapper {
+            width: 64px; height: 64px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.75rem; margin-bottom: 2rem;
+        }
+
+        .traffic-card .icon-wrapper { background: rgba(16, 185, 129, 0.1); color: var(--primary); }
+        .crowd-card .icon-wrapper { background: rgba(139, 92, 246, 0.1); color: var(--accent); }
+
+        .panel-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; margin-bottom: 1rem; }
+        .panel-card p { font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; }
+
+        .launch-btn {
+            margin-top: auto; display: inline-flex; align-items: center; gap: 0.5rem;
+            font-weight: 600; color: var(--text-color); transition: gap 0.2s;
+        }
+
+        .traffic-card .launch-btn i { color: var(--primary); }
+        .crowd-card .launch-btn i { color: var(--accent); }
+        .panel-card:hover .launch-btn { gap: 0.8rem; }
+
+        /* Tech Stack */
+        .tech-section {
+            padding: 6rem 5%; text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted); margin-bottom: 4rem; max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+
+        .tech-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem;
+        }
+
+        .tech-item {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            padding: 2rem 1rem; border-radius: 16px; display: flex; flex-direction: column; align-items: center; gap: 1rem;
+            font-weight: 500; backdrop-filter: blur(8px);
+        }
+
+        .tech-item img, .tech-item i {
+            width: 48px; height: 48px; font-size: 48px; object-fit: contain;
+        }
+
+        .tech-react i { color: #61dafb; }
+        .tech-python i { color: #3776ab; }
+        .tech-fastapi i { color: #009688; }
+        .tech-yolo i { color: #ff00ff; }
+        .tech-vite i { color: #646cff; }
+
+        /* Features */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;
+            text-align: left;
+        }
+
+        .feature-box {
+            padding: 2rem; border-radius: 16px; border: 1px solid var(--card-border);
+            background: linear-gradient(145deg, var(--card-bg), transparent);
+        }
+
+        .feature-box i { font-size: 1.5rem; margin-bottom: 1rem; color: var(--secondary); background: rgba(14, 165, 233, 0.1); padding: 1rem; border-radius: 12px; }
+        .feature-box h3 { font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 0.75rem; }
+        .feature-box p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Footer */
+        footer {
+            text-align: center; padding: 3rem 5%; border-top: 1px solid var(--card-border);
+            color: var(--text-muted); font-size: 0.9rem; margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .panels-container { grid-template-columns: 1fr; }
+            nav.nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-layer-group"></i> Seeva Sarthak
+        </div>
+        <nav class="nav-links">
+            <a href="#dashboards">Dashboards</a>
+            <a href="#features">Features</a>
+            <a href="#tech-stack">Tech Stack</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fa-regular fa-sun"></i> <span>Light</span>
+        </button>
+    </header>
+
+    <section class="hero" id="dashboards">
+        <div class="pill">
+            <i class="fa-solid fa-bolt"></i> Operational Readiness System
+        </div>
+        <h1>Unified Intelligence for<br><span>Smart Bengaluru</span></h1>
+        <p class="subtitle">A centralized digital twin ecosystem orchestrating high-fidelity microscopic traffic flow mapping and real-time computer vision crowd monitoring.</p>
+
+        <div class="panels-container">
+            <!-- Traffic Control Panel -->
+            <a href="http://localhost:5173" class="panel-card traffic-card" target="_blank">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-traffic-light"></i>
+                </div>
+                <h2>Traffic Operations</h2>
+                <p>AI-driven intersection control, live vehicle micro-simulation pacing, dynamic toll pricing, and emergency green wave propagation sequences.</p>
+                <div class="launch-btn">
+                    Launch Traffic Sandbox <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Crowd Management Panel -->
+            <a href="http://localhost:5174" class="panel-card crowd-card" target="_blank">
+                <div class="icon-wrapper">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                </div>
+                <h2>Crowd Intelligence</h2>
+                <p>Real-time YOLOv8 surveillance tracking, predictive density forecasting, autonomous event tracking, and emergency resource allocation mapping.</p>
+                <div class="launch-btn">
+                    Launch Security Console <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title text-center" style="text-align: center;">System Capabilities</h2>
+        <p class="section-subtitle">Deep integration capabilities combining geospatial intelligence and continuous edge monitoring.</p>
+        
+        <div class="features-grid">
+            <div class="feature-box">
+                <i class="fa-solid fa-network-wired"></i>
+                <h3>Digital Twin Topology</h3>
+                <p>Interactive SVGs forming a microscopic replica of key Bengaluru junctions to accurately reflect congestion variables based on Live datasets.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-shield-cat"></i>
+                <h3>YOLO Edge Vision</h3>
+                <p>Plug-and-play visual processing via CCTV or local Webcams to detect hyper-dense crowds, bottlenecks, and gate analytics.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-truck-medical"></i>
+                <h3>Emergency Pathways</h3>
+                <p>The system computes optimal routing for priority ambulances/police cruisers instantly flushing corridors (Green Wave).</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-temperature-arrow-up"></i>
+                <h3>Environmental Control</h3>
+                <p>AQI aware load-balancing algorithms that restrict or impose Dynamic Toll Pricing on carbon-heavy zones.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-robot"></i>
+                <h3>Gemini AI Analytics</h3>
+                <p>LLM-backed reasoning engine synthesizing real-world disruptions (Monsoon floods, Metro construction) providing root-cause reports.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-satellite-dish"></i>
+                <h3>WebSocket Live Telemetry</h3>
+                <p>Zero-latency bi-directional messaging stream ensuring UI renders traffic shifts and alerts synchronised to the millisecond.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-section" id="tech-stack">
+        <h2 class="section-title">Underlying Technology</h2>
+        <p class="section-subtitle">Engineered for low-latency scale using robust modern frameworks.</p>
+        
+        <div class="tech-grid">
+            <div class="tech-item tech-react">
+                <i class="fa-brands fa-react"></i>
+                <span>React 19</span>
+            </div>
+            <div class="tech-item tech-vite">
+                <img src="https://vitejs.dev/logo.svg" alt="Vite" style="width: 48px; height: 48px;">
+                <span>Vite Engine</span>
+            </div>
+            <div class="tech-item tech-python">
+                <i class="fa-brands fa-python"></i>
+                <span>Python 3.10</span>
+            </div>
+            <div class="tech-item tech-fastapi">
+                <!-- Custom SVG for fastapi/generic network -->
+                <i class="fa-solid fa-server"></i>
+                <span>FastAPI Base</span>
+            </div>
+            <div class="tech-item tech-yolo">
+                <i class="fa-solid fa-eye"></i>
+                <span>Ultralytics YOLO</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-solid fa-plug" style="color: #f59e0b;"></i>
+                <span>WebSockets</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Developed for Bengaluru Innovation Prototype &copy; 2026 Seeva Sarthak Framework.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        const text = themeToggle.querySelector('span');
+        
+        let isLight = false;
+
+        themeToggle.addEventListener('click', () => {
+            isLight = !isLight;
+            if (isLight) {
+                document.body.classList.add('light-theme');
+                icon.className = 'fa-solid fa-moon';
+                text.textContent = 'Dark';
+            } else {
+                document.body.classList.remove('light-theme');
+                icon.className = 'fa-regular fa-sun';
+                text.textContent = 'Light';
+            }
+        });
+    </script>
+</body>
+</html>

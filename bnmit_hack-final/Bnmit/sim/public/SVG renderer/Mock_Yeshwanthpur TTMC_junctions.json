@@ -1,0 +1,229 @@
+{
+  "junctions": [
+    {
+      "id": 1,
+      "name": "Yeshwanthpur TTMC Junction",
+      "control": "FIXED",
+      "canvas": {
+        "width": 900,
+        "height": 560,
+        "cx": 450,
+        "cy": 280
+      },
+      "approaches": [
+        {
+          "leg": "A",
+          "from": "SBM",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S",
+            "R",
+            "S",
+            "S",
+            "L"
+          ],
+          "angle_deg": 0,
+          "cx": 615,
+          "cy": 280
+        },
+        {
+          "leg": "B",
+          "from": "SUBANA CIRCLE",
+          "direction": "?",
+          "movements": [
+            "R",
+            "S"
+          ],
+          "angle_deg": 90,
+          "cx": 450,
+          "cy": 115
+        },
+        {
+          "leg": "C",
+          "from": "BVKAYANGAR ROAD",
+          "direction": "?",
+          "movements": [
+            "L"
+          ],
+          "angle_deg": 180,
+          "cx": 285,
+          "cy": 280
+        }
+      ],
+      "timings": [
+        {
+          "from_time": "07:00",
+          "to_time": "09:00",
+          "phase_greens": [
+            {
+              "weekday": 60,
+              "sunday": 60
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 105,
+            "sunday": 105
+          }
+        },
+        {
+          "from_time": "09:00",
+          "to_time": "22:00",
+          "phase_greens": [
+            {
+              "weekday": 100,
+              "sunday": 100
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            }
+          ],
+          "ped_phase": {
+            "weekday": 35,
+            "sunday": 35
+          },
+          "cycle_time": {
+            "weekday": 150,
+            "sunday": 150
+          }
+        },
+        {
+          "from_time": "22:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 60,
+              "sunday": 60
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 105,
+            "sunday": 105
+          }
+        },
+        {
+          "from_time": "08:00",
+          "to_time": "11:00",
+          "phase_greens": [
+            {
+              "weekday": 80,
+              "sunday": 80
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 150,
+            "sunday": 150
+          }
+        },
+        {
+          "from_time": "11:00",
+          "to_time": "16:00",
+          "phase_greens": [
+            {
+              "weekday": 70,
+              "sunday": 70
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 25,
+              "sunday": 25
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 130,
+            "sunday": 130
+          }
+        },
+        {
+          "from_time": "16:00",
+          "to_time": "21:00",
+          "phase_greens": [
+            {
+              "weekday": 80,
+              "sunday": 80
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 150,
+            "sunday": 150
+          }
+        },
+        {
+          "from_time": "21:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 65,
+              "sunday": 65
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            }
+          ],
+          "ped_phase": {
+            "weekday": 15,
+            "sunday": 15
+          },
+          "cycle_time": {
+            "weekday": 115,
+            "sunday": 115
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "junctions": [
+    {
+      "id": 1,
+      "name": "SHANKARMUTTCIRCLE(VIJAYANAGAR)JUNCTION,VIJAYANAGARPOLICESTATION",
+      "control": "VAC",
+      "canvas": {
+        "width": 900,
+        "height": 560,
+        "cx": 450,
+        "cy": 280
+      },
+      "approaches": [
+        {
+          "leg": "A",
+          "from": "VIJAYNAGARRD",
+          "direction": "?",
+          "movements": [
+            "L",
+            "S",
+            "L",
+            "R",
+            "S",
+            "S",
+            "L"
+          ],
+          "angle_deg": 0,
+          "cx": 615,
+          "cy": 280
+        },
+        {
+          "leg": "B",
+          "from": "PATEGAR PALYA",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S"
+          ],
+          "angle_deg": 90,
+          "cx": 450,
+          "cy": 115
+        },
+        {
+          "leg": "C",
+          "from": "RAHEJA APARTMENT",
+          "direction": "?",
+          "movements": [
+            "L",
+            "S",
+            "L"
+          ],
+          "angle_deg": 180,
+          "cx": 285,
+          "cy": 280
+        },
+        {
+          "leg": "D",
+          "from": "NAGARBHAVI",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S"
+          ],
+          "angle_deg": 270,
+          "cx": 450,
+          "cy": 445
+        }
+      ],
+      "timings": [
+        {
+          "from_time": "11:00",
+          "to_time": "16:00",
+          "phase_greens": [
+            {
+              "weekday": 50,
+              "sunday": 50
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            }
+          ],
+          "ped_phase": {
+            "weekday": 10,
+            "sunday": 10
+          },
+          "cycle_time": {
+            "weekday": 120,
+            "sunday": 120
+          }
+        },
+        {
+          "from_time": "16:00",
+          "to_time": "22:00",
+          "phase_greens": [
+            {
+              "weekday": 60,
+              "sunday": 60
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 10,
+            "sunday": 10
+          },
+          "cycle_time": {
+            "weekday": 150,
+            "sunday": 150
+          }
+        },
+        {
+          "from_time": "07:00",
+          "to_time": "08:00",
+          "phase_greens": [
+            {
+              "weekday": 40,
+              "sunday": 40
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 10,
+            "sunday": 10
+          }
+        },
+        {
+          "from_time": "08:00",
+          "to_time": "11:00",
+          "phase_greens": [
+            {
+              "weekday": 80,
+              "sunday": 80
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 10,
+            "sunday": 10
+          },
+          "cycle_time": {
+            "weekday": 190,
+            "sunday": 190
+          }
+        },
+        {
+          "from_time": "21:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 40,
+              "sunday": 40
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 25,
+              "sunday": 25
+            }
+          ],
+          "ped_phase": {
+            "weekday": 7,
+            "sunday": 7
+          },
+          "cycle_time": {
+            "weekday": 112,
+            "sunday": 112
+          }
+        }
+      ]
+    }
+  ]
+}

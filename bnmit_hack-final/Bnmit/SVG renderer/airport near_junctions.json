@@ -1,0 +1,284 @@
+{
+  "junctions": [
+    {
+      "id": 1,
+      "name": "MANIPALHOSPITALJUNCTION,AIRPORTPOLICESTATION",
+      "control": "VAC",
+      "canvas": {
+        "width": 900,
+        "height": 560,
+        "cx": 450,
+        "cy": 280
+      },
+      "approaches": [
+        {
+          "leg": "A",
+          "from": "ISROJUNCTION",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S",
+            "L",
+            "S",
+            "L",
+            "S",
+            "L",
+            "R",
+            "S"
+          ],
+          "angle_deg": 0,
+          "cx": 615,
+          "cy": 280
+        },
+        {
+          "leg": "B",
+          "from": "MARATHALI",
+          "direction": "?",
+          "movements": [
+            "L",
+            "S",
+            "R",
+            "L",
+            "S"
+          ],
+          "angle_deg": 90,
+          "cx": 450,
+          "cy": 115
+        },
+        {
+          "leg": "C",
+          "from": "SURJANDAS ROAD",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S",
+            "L"
+          ],
+          "angle_deg": 180,
+          "cx": 285,
+          "cy": 280
+        }
+      ],
+      "timings": [
+        {
+          "from_time": "07:00",
+          "to_time": "07:30",
+          "phase_greens": [
+            {
+              "weekday": 10,
+              "sunday": 10
+            },
+            {
+              "weekday": 70,
+              "sunday": 70
+            }
+          ],
+          "ped_phase": {
+            "weekday": 40,
+            "sunday": 40
+          },
+          "cycle_time": {
+            "weekday": 15,
+            "sunday": 15
+          }
+        },
+        {
+          "from_time": "08:00",
+          "to_time": "22:00",
+          "phase_greens": [
+            {
+              "weekday": 10,
+              "sunday": 10
+            },
+            {
+              "weekday": 50,
+              "sunday": 50
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 30,
+              "sunday": 30
+            }
+          ],
+          "ped_phase": {
+            "weekday": 10,
+            "sunday": 10
+          },
+          "cycle_time": {
+            "weekday": 130,
+            "sunday": 130
+          }
+        },
+        {
+          "from_time": "07:30",
+          "to_time": "10:30",
+          "phase_greens": [
+            {
+              "weekday": 10,
+              "sunday": 10
+            },
+            {
+              "weekday": 80,
+              "sunday": 80
+            },
+            {
+              "weekday": 45,
+              "sunday": 45
+            },
+            {
+              "weekday": 50,
+              "sunday": 50
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 205,
+            "sunday": 205
+          }
+        },
+        {
+          "from_time": "10:30",
+          "to_time": "16:30",
+          "phase_greens": [
+            {
+              "weekday": 10,
+              "sunday": 10
+            },
+            {
+              "weekday": 70,
+              "sunday": 70
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 15,
+            "sunday": 15
+          },
+          "cycle_time": {
+            "weekday": 175,
+            "sunday": 175
+          }
+        },
+        {
+          "from_time": "16:30",
+          "to_time": "20:00",
+          "phase_greens": [
+            {
+              "weekday": 10,
+              "sunday": 10
+            },
+            {
+              "weekday": 80,
+              "sunday": 80
+            },
+            {
+              "weekday": 45,
+              "sunday": 45
+            },
+            {
+              "weekday": 50,
+              "sunday": 50
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 205,
+            "sunday": 205
+          }
+        },
+        {
+          "from_time": "20:00",
+          "to_time": "22:00",
+          "phase_greens": [
+            {
+              "weekday": 10,
+              "sunday": 10
+            },
+            {
+              "weekday": 70,
+              "sunday": 70
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 15,
+            "sunday": 15
+          },
+          "cycle_time": {
+            "weekday": 175,
+            "sunday": 175
+          }
+        },
+        {
+          "from_time": "11:00",
+          "to_time": "16:30",
+          "phase_greens": [
+            {
+              "weekday": 48,
+              "sunday": 48
+            },
+            {
+              "weekday": 70,
+              "sunday": 70
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 138,
+            "sunday": 138
+          }
+        },
+        {
+          "from_time": "20:30",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 48,
+              "sunday": 48
+            },
+            {
+              "weekday": 70,
+              "sunday": 70
+            }
+          ],
+          "ped_phase": {
+            "weekday": 20,
+            "sunday": 20
+          },
+          "cycle_time": {
+            "weekday": 138,
+            "sunday": 138
+          }
+        }
+      ]
+    }
+  ]
+}

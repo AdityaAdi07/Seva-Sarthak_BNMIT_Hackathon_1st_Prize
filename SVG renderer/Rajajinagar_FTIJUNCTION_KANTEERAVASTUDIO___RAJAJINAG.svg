@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" font-family="Segoe UI,Arial,sans-serif">
+<defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#eceff1" stroke-width="0.5"/></pattern></defs>
+<rect width="900" height="560" fill="#f4f7f6"/>
+<rect width="900" height="560" fill="url(#grid)"/>
+<g transform="translate(840, 50)"><circle cx="0" cy="0" r="16" fill="white" stroke="#cfd8dc" stroke-width="1"/><path d="M 0 -10 L 4 0 L 0 10 L -4 0 Z" fill="#cfd8dc"/><path d="M 0 -10 L 0 10 L -4 0 Z" fill="#b0bec5"/><text x="0" y="-14" text-anchor="middle" fill="#78909c" font-size="10" font-weight="600">N</text></g>
+<line x1="450" y1="280" x2="918" y2="280" stroke="#e0e0e0" stroke-width="66" stroke-linecap="square"/>
+<line x1="450" y1="280" x2="918" y2="280" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="8,8" opacity="0.6"/>
+<line x1="450" y1="280" x2="450" y2="-11" stroke="#e0e0e0" stroke-width="66" stroke-linecap="square"/>
+<line x1="450" y1="280" x2="450" y2="-11" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="8,8" opacity="0.6"/>
+<line x1="450" y1="280" x2="-18" y2="280" stroke="#e0e0e0" stroke-width="66" stroke-linecap="square"/>
+<line x1="450" y1="280" x2="-18" y2="280" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="8,8" opacity="0.6"/>
+<line x1="450" y1="280" x2="450" y2="571" stroke="#e0e0e0" stroke-width="66" stroke-linecap="square"/>
+<line x1="450" y1="280" x2="450" y2="571" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="8,8" opacity="0.6"/>
+<rect x="392" y="222" width="116" height="116" fill="#e0e0e0" stroke="#9e9e9e" stroke-dasharray="4,4" stroke-width="2"/>
+<rect x="394" y="256" width="112" height="48" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="2" filter="drop-shadow(0px 2px 4px rgba(0,0,0,0.06))"/>
+<text x="450" y="276" text-anchor="middle" fill="#263238" font-size="11" font-weight="700">FTIJUNCTION</text>
+<text x="450" y="291" text-anchor="middle" fill="#78909c" font-size="9">Junction • VAC</text>
+<rect x="420" y="310" width="60" height="18" rx="9" fill="#1e88e5" filter="drop-shadow(0 2px 3px rgba(33,150,243,0.3))"/>
+<text x="450" y="322" text-anchor="middle" fill="white" font-size="9" font-weight="600">Ped: 15s</text>
+<text x="450" y="24" text-anchor="middle" fill="#263238" font-size="15" font-weight="800">FTIJUNCTION JUNCTION</text>
+<text x="450" y="40" text-anchor="middle" fill="#78909c" font-size="11">Time Slot: 11:00 – 16:30  |  Control: VAC Signal</text>
+<circle cx="615" cy="280" r="32" fill="#fb8c00" opacity="0.95" filter="drop-shadow(0px 3px 5px rgba(0,0,0,0.15))"/>
+<text x="615" y="278" text-anchor="middle" fill="white" font-size="10" font-weight="700">→R ←L ↑S</text>
+<text x="615" y="290" text-anchor="middle" fill="white" opacity="0.9" font-size="9" font-weight="500">35s Green</text>
+<rect x="601" y="320" width="29" height="8" rx="4" fill="#43a047"/>
+<text x="679" y="280" text-anchor="middle" fill="#263238" font-size="11" font-weight="600">← From Kengeri</text>
+<text x="679" y="292" text-anchor="middle" fill="#d32f2f" font-size="9" font-weight="600">v/c: 0.93</text>
+<rect x="569" y="218" width="52" height="18" rx="5" fill="#fb8c00" opacity="0.9" filter="drop-shadow(0px 2px 3px rgba(0,0,0,0.15))"/>
+<text x="595.0" y="231" text-anchor="middle" fill="white" font-size="9" font-weight="700">Wait: A</text>
+<circle cx="450" cy="115" r="32" fill="#4caf50" opacity="0.95" filter="drop-shadow(0px 3px 5px rgba(0,0,0,0.15))"/>
+<text x="450" y="113" text-anchor="middle" fill="white" font-size="10" font-weight="700">→R ←L ↑S</text>
+<text x="450" y="125" text-anchor="middle" fill="white" opacity="0.9" font-size="9" font-weight="500">50s Green</text>
+<rect x="429" y="155" width="42" height="8" rx="4" fill="#43a047"/>
+<text x="450" y="51" text-anchor="middle" fill="#263238" font-size="11" font-weight="600">↓ From Penya</text>
+<text x="450" y="63" text-anchor="middle" fill="#2e7d32" font-size="9" font-weight="600">v/c: 0.63</text>
+<circle cx="285" cy="280" r="32" fill="#4caf50" opacity="0.95" filter="drop-shadow(0px 3px 5px rgba(0,0,0,0.15))"/>
+<text x="285" y="278" text-anchor="middle" fill="white" font-size="10" font-weight="700">→R ←L ↑S</text>
+<text x="285" y="290" text-anchor="middle" fill="white" opacity="0.9" font-size="9" font-weight="500">40s Green</text>
+<rect x="268" y="320" width="34" height="8" rx="4" fill="#43a047"/>
+<text x="221" y="280" text-anchor="middle" fill="#263238" font-size="11" font-weight="600">→ From Gokuldasjn</text>
+<text x="221" y="292" text-anchor="middle" fill="#2e7d32" font-size="9" font-weight="600">v/c: 0.81</text>
+<circle cx="450" cy="445" r="32" fill="#4caf50" opacity="0.95" filter="drop-shadow(0px 3px 5px rgba(0,0,0,0.15))"/>
+<text x="450" y="443" text-anchor="middle" fill="white" font-size="10" font-weight="700">←L →R ←L</text>
+<text x="450" y="455" text-anchor="middle" fill="white" opacity="0.9" font-size="9" font-weight="500">40s Green</text>
+<rect x="433" y="485" width="34" height="8" rx="4" fill="#43a047"/>
+<text x="450" y="509" text-anchor="middle" fill="#263238" font-size="11" font-weight="600">↑ From Mahalakshmi Layout</text>
+<text x="450" y="521" text-anchor="middle" fill="#2e7d32" font-size="9" font-weight="600">v/c: 0.81</text>
+<rect x="20" y="410" width="250" height="135" rx="8" fill="#ffffff" stroke="#eceff1" stroke-width="1" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.05))"/>
+<text x="35" y="430" fill="#263238" font-size="12" font-weight="800">Phase Summary</text>
+<text x="35" y="448" fill="#263238" font-size="10" font-weight="500">Leg A </text>
+<text x="70" y="448" fill="#78909c" font-size="9" font-weight="400">(Kengeri):</text>
+<text x="180" y="448" fill="#d32f2f" font-size="10" font-weight="600">35s green</text>
+<text x="35" y="464" fill="#263238" font-size="10" font-weight="500">Leg B </text>
+<text x="70" y="464" fill="#78909c" font-size="9" font-weight="400">(Penya):</text>
+<text x="180" y="464" fill="#2e7d32" font-size="10" font-weight="600">50s green</text>
+<text x="35" y="480" fill="#263238" font-size="10" font-weight="500">Leg C </text>
+<text x="70" y="480" fill="#78909c" font-size="9" font-weight="400">(Gokuldasjn):</text>
+<text x="180" y="480" fill="#2e7d32" font-size="10" font-weight="600">40s green</text>
+<text x="35" y="496" fill="#263238" font-size="10" font-weight="500">Leg D </text>
+<text x="70" y="496" fill="#78909c" font-size="9" font-weight="400">(Mahalakshmi ):</text>
+<text x="180" y="496" fill="#2e7d32" font-size="10" font-weight="600">40s green</text>
+<text x="35" y="512" fill="#263238" font-size="10" font-weight="500">Leg Ped </text>
+<text x="70" y="512" fill="#78909c" font-size="9" font-weight="400">(Pedestrian):</text>
+<text x="180" y="512" fill="#2e7d32" font-size="10" font-weight="600">15s wait</text>
+<rect x="720" y="450" width="160" height="90" rx="8" fill="#ffffff" stroke="#eceff1" stroke-width="1" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.05))"/>
+<text x="800" y="472" text-anchor="middle" fill="#78909c" font-size="11" font-weight="600">Total Cycle Time</text>
+<text x="800" y="505" text-anchor="middle" fill="#263238" font-size="30" font-weight="800">180s</text>
+<text x="800" y="528" text-anchor="middle" fill="#fb8c00" font-size="10" font-weight="700">Heavy Traffic ⚠</text>
+</svg>

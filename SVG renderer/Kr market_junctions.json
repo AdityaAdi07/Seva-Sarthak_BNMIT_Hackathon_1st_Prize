@@ -1,0 +1,601 @@
+{
+  "junctions": [
+    {
+      "id": 1,
+      "name": "K.R.MARKET JUNCTION, K.R.MARKET POLICESTATION",
+      "control": "VAC",
+      "canvas": {
+        "width": 900,
+        "height": 560,
+        "cx": 450,
+        "cy": 280
+      },
+      "approaches": [
+        {
+          "leg": "A",
+          "from": "TOWNHALL",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S",
+            "L"
+          ],
+          "angle_deg": 0,
+          "cx": 615,
+          "cy": 280
+        },
+        {
+          "leg": "B",
+          "from": "MEDICAL COLLEGE",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L",
+            "S",
+            "L"
+          ],
+          "angle_deg": 90,
+          "cx": 450,
+          "cy": 115
+        },
+        {
+          "leg": "C",
+          "from": "BRIYAND SQUARE",
+          "direction": "?",
+          "movements": [
+            "R",
+            "S"
+          ],
+          "angle_deg": 180,
+          "cx": 285,
+          "cy": 280
+        },
+        {
+          "leg": "D",
+          "from": "BRIYAND SERVICEROAD",
+          "direction": "?",
+          "movements": [
+            "L",
+            "L"
+          ],
+          "angle_deg": 270,
+          "cx": 450,
+          "cy": 445
+        }
+      ],
+      "timings": [
+        {
+          "from_time": "06:00",
+          "to_time": "08:00",
+          "phase_greens": [
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 90,
+            "sunday": 90
+          }
+        },
+        {
+          "from_time": "08:00",
+          "to_time": "12:00",
+          "phase_greens": [
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 60,
+              "sunday": 60
+            }
+          ],
+          "ped_phase": {
+            "weekday": 50,
+            "sunday": 50
+          },
+          "cycle_time": {
+            "weekday": 140,
+            "sunday": 140
+          }
+        },
+        {
+          "from_time": "12:00",
+          "to_time": "16:00",
+          "phase_greens": [
+            {
+              "weekday": 25,
+              "sunday": 25
+            },
+            {
+              "weekday": 60,
+              "sunday": 60
+            }
+          ],
+          "ped_phase": {
+            "weekday": 60,
+            "sunday": 60
+          },
+          "cycle_time": {
+            "weekday": 145,
+            "sunday": 145
+          }
+        },
+        {
+          "from_time": "16:00",
+          "to_time": "21:00",
+          "phase_greens": [
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 65,
+              "sunday": 65
+            }
+          ],
+          "ped_phase": {
+            "weekday": 50,
+            "sunday": 50
+          },
+          "cycle_time": {
+            "weekday": 145,
+            "sunday": 145
+          }
+        },
+        {
+          "from_time": "21:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 90,
+            "sunday": 90
+          }
+        },
+        {
+          "from_time": "06:30",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 60,
+              "sunday": 60
+            }
+          ],
+          "ped_phase": {
+            "weekday": 40,
+            "sunday": 40
+          },
+          "cycle_time": {
+            "weekday": 130,
+            "sunday": 130
+          }
+        },
+        {
+          "from_time": "09:00",
+          "to_time": "11:00",
+          "phase_greens": [
+            {
+              "weekday": 85,
+              "sunday": 85
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 43,
+              "sunday": 43
+            }
+          ],
+          "ped_phase": {
+            "weekday": 43,
+            "sunday": 43
+          },
+          "cycle_time": {
+            "weekday": 186,
+            "sunday": 186
+          }
+        },
+        {
+          "from_time": "11:00",
+          "to_time": "16:00",
+          "phase_greens": [
+            {
+              "weekday": 53,
+              "sunday": 53
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 35,
+              "sunday": 35
+            }
+          ],
+          "ped_phase": {
+            "weekday": 50,
+            "sunday": 50
+          },
+          "cycle_time": {
+            "weekday": 153,
+            "sunday": 153
+          }
+        },
+        {
+          "from_time": "20:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 53,
+              "sunday": 53
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 35,
+              "sunday": 35
+            }
+          ],
+          "ped_phase": {
+            "weekday": 38,
+            "sunday": 38
+          },
+          "cycle_time": {
+            "weekday": 141,
+            "sunday": 141
+          }
+        },
+        {
+          "from_time": "07:00",
+          "to_time": "22:00",
+          "phase_greens": [
+            {
+              "weekday": 53,
+              "sunday": 53
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 35,
+              "sunday": 35
+            }
+          ],
+          "ped_phase": {
+            "weekday": 38,
+            "sunday": 38
+          },
+          "cycle_time": {
+            "weekday": 141,
+            "sunday": 141
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "MINER",
+      "control": "VAC",
+      "canvas": {
+        "width": 900,
+        "height": 560,
+        "cx": 450,
+        "cy": 280
+      },
+      "approaches": [
+        {
+          "leg": "A",
+          "from": "RVROAD",
+          "direction": "?",
+          "movements": [
+            "L",
+            "S",
+            "S",
+            "L",
+            "R",
+            "S",
+            "L"
+          ],
+          "angle_deg": 0,
+          "cx": 615,
+          "cy": 280
+        },
+        {
+          "leg": "B",
+          "from": "MARKET",
+          "direction": "?",
+          "movements": [
+            "R",
+            "L"
+          ],
+          "angle_deg": 90,
+          "cx": 450,
+          "cy": 115
+        },
+        {
+          "leg": "C",
+          "from": "LALBAGH",
+          "direction": "?",
+          "movements": [
+            "L",
+            "R",
+            "L",
+            "S"
+          ],
+          "angle_deg": 180,
+          "cx": 285,
+          "cy": 280
+        }
+      ],
+      "timings": [
+        {
+          "from_time": "06:00",
+          "to_time": "08:00",
+          "phase_greens": [
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 90,
+            "sunday": 90
+          }
+        },
+        {
+          "from_time": "08:00",
+          "to_time": "12:00",
+          "phase_greens": [
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 60,
+              "sunday": 60
+            }
+          ],
+          "ped_phase": {
+            "weekday": 50,
+            "sunday": 50
+          },
+          "cycle_time": {
+            "weekday": 140,
+            "sunday": 140
+          }
+        },
+        {
+          "from_time": "12:00",
+          "to_time": "16:00",
+          "phase_greens": [
+            {
+              "weekday": 25,
+              "sunday": 25
+            },
+            {
+              "weekday": 60,
+              "sunday": 60
+            }
+          ],
+          "ped_phase": {
+            "weekday": 60,
+            "sunday": 60
+          },
+          "cycle_time": {
+            "weekday": 145,
+            "sunday": 145
+          }
+        },
+        {
+          "from_time": "16:00",
+          "to_time": "21:00",
+          "phase_greens": [
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 65,
+              "sunday": 65
+            }
+          ],
+          "ped_phase": {
+            "weekday": 50,
+            "sunday": 50
+          },
+          "cycle_time": {
+            "weekday": 145,
+            "sunday": 145
+          }
+        },
+        {
+          "from_time": "21:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 20,
+              "sunday": 20
+            },
+            {
+              "weekday": 40,
+              "sunday": 40
+            }
+          ],
+          "ped_phase": {
+            "weekday": 30,
+            "sunday": 30
+          },
+          "cycle_time": {
+            "weekday": 90,
+            "sunday": 90
+          }
+        },
+        {
+          "from_time": "06:30",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 30,
+              "sunday": 30
+            },
+            {
+              "weekday": 60,
+              "sunday": 60
+            }
+          ],
+          "ped_phase": {
+            "weekday": 40,
+            "sunday": 40
+          },
+          "cycle_time": {
+            "weekday": 130,
+            "sunday": 130
+          }
+        },
+        {
+          "from_time": "09:00",
+          "to_time": "11:00",
+          "phase_greens": [
+            {
+              "weekday": 85,
+              "sunday": 85
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 43,
+              "sunday": 43
+            }
+          ],
+          "ped_phase": {
+            "weekday": 43,
+            "sunday": 43
+          },
+          "cycle_time": {
+            "weekday": 186,
+            "sunday": 186
+          }
+        },
+        {
+          "from_time": "11:00",
+          "to_time": "16:00",
+          "phase_greens": [
+            {
+              "weekday": 53,
+              "sunday": 53
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 35,
+              "sunday": 35
+            }
+          ],
+          "ped_phase": {
+            "weekday": 50,
+            "sunday": 50
+          },
+          "cycle_time": {
+            "weekday": 153,
+            "sunday": 153
+          }
+        },
+        {
+          "from_time": "20:00",
+          "to_time": "23:00",
+          "phase_greens": [
+            {
+              "weekday": 53,
+              "sunday": 53
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 35,
+              "sunday": 35
+            }
+          ],
+          "ped_phase": {
+            "weekday": 38,
+            "sunday": 38
+          },
+          "cycle_time": {
+            "weekday": 141,
+            "sunday": 141
+          }
+        },
+        {
+          "from_time": "07:00",
+          "to_time": "22:00",
+          "phase_greens": [
+            {
+              "weekday": 53,
+              "sunday": 53
+            },
+            {
+              "weekday": 15,
+              "sunday": 15
+            },
+            {
+              "weekday": 35,
+              "sunday": 35
+            }
+          ],
+          "ped_phase": {
+            "weekday": 38,
+            "sunday": 38
+          },
+          "cycle_time": {
+            "weekday": 141,
+            "sunday": 141
+          }
+        }
+      ]
+    }
+  ]
+}

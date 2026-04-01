@@ -1,0 +1,13 @@
+# Namma Sentinel - .gitignore
+node_modules/
+dist/
+.env
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+*.pt
+uploads/

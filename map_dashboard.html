@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bengaluru Smart Junction Control</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --danger: #ef4444;
+            --danger-light: #fef2f2;
+            --success: #10b981;
+            --success-light: #ecfdf5;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --border: rgba(203, 213, 225, 0.6);
+        }
+        
+        body, html { 
+            margin: 0; padding: 0; height: 100%; 
+            font-family: 'Inter', sans-serif; 
+            background: #f8fafc; 
+            overflow: hidden;
+            color: var(--text-main);
+        }
+        
+        #map { 
+            width: 100%; height: 100vh; z-index: 1;
+        }
+
+        /* Premium Light Theme Glass UI Elements */
+        .glass-panel {
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+            z-index: 1000;
+        }
+
+        /* Top Header */
+        .header-panel {
+            position: absolute;
+            top: 24px; left: 24px;
+            padding: 24px;
+            width: 340px;
+        }
+        .header-panel h2 { 
+            margin: 0 0 8px 0; font-size: 24px; font-weight: 800; font-family: 'Outfit', sans-serif;
+            color: #0f172a; 
+            display: flex; align-items: center; gap: 8px;
+        }
+        .header-panel p { margin: 0; color: var(--text-muted); font-size: 14px; font-weight: 400; line-height: 1.5; }
+        
+        /* Stats summary in header */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+        .stat-box { 
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 16px; border-radius: 12px;
+            display: flex; flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .stat-value { font-size: 28px; font-weight: 800; font-family: 'Outfit', sans-serif; color: var(--primary); }
+        .stat-value.choked { color: var(--danger); }
+        .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+        /* Sidebar List */
+        .sidebar {
+            position: absolute;
+            top: 240px; left: 24px; bottom: 24px;
+            width: 340px;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+        .sidebar-header {
+            padding: 16px 24px;
+            font-size: 13px; font-weight: 700; color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            background: rgba(248, 250, 252, 0.9);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .filter-btn {
+            background: none; border: 1px solid var(--border);
+            padding: 4px 10px; border-radius: 12px;
+            font-size: 11px; font-weight: 600; color: var(--text-muted);
+            cursor: pointer; transition: 0.2s;
+        }
+        .filter-btn:hover { background: #f1f5f9; }
+        .filter-btn.active { background: var(--danger-light); color: var(--danger); border-color: var(--danger); }
+
+        .sidebar-list {
+            flex: 1; overflow-y: auto; overflow-x: hidden; padding: 8px 0;
+        }
+        .sidebar-list::-webkit-scrollbar { width: 6px; }
+        .sidebar-list::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .sidebar-list::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .junction-item {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .junction-item:hover {
+            background: #f8fafc;
+            transform: translateX(4px);
+        }
+        
+        .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+        .jcn-name-text { 
+            font-size: 14px; font-weight: 600; color: var(--text-main);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        .badge { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge.ok { background: var(--success-light); color: var(--success); }
+        .badge.choked { background: var(--danger-light); color: var(--danger); box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+        
+        .item-details { display: flex; align-items: center; font-size: 12px; color: var(--text-muted); font-weight: 500; }
+        .item-details span { display: flex; align-items: center; gap: 4px; }
+        .item-details .peak-icon { font-size: 14px; }
+
+        /* Light Theme Map Marker */
+        .custom-marker {
+            width: 20px; height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .custom-marker.choked {
+            background: var(--danger);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+            animation: pulse-danger 2s infinite;
+        }
+        .custom-marker:hover {
+            transform: scale(1.2);
+            background: #1d4ed8;
+        }
+        .custom-marker.choked:hover { background: #dc2626; }
+        
+        @keyframes pulse-danger {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Clean Light Popup */
+        .leaflet-popup-content-wrapper {
+            background: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(15,23,42,0.1);
+        }
+        .leaflet-popup-content { margin: 0; width: 900px !important; text-align: center; }
+        .leaflet-popup-tip { background: #ffffff; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        
+        .leaflet-container a.leaflet-popup-close-button {
+            color: var(--text-muted);
+            padding: 8px 12px; font-size: 20px; border-radius: 50%; z-index: 10;
+            transition: all 0.2s;
+        }
+        .leaflet-container a.leaflet-popup-close-button:hover { color: var(--text-main); background: #f1f5f9; }
+
+        .popup-header {
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .popup-title { font-size: 16px; font-weight: 700; font-family: 'Outfit', sans-serif; color: #0f172a; }
+        
+        object {
+            width: 900px; height: 560px; border: none; display: block;
+            background: #f4f7f6; /* Force light backdrop for SVGs */
+        }
+        
+        .leaflet-control-zoom a { background: #fff !important; color: var(--text-main) !important; border: 1px solid var(--border) !important; font-weight: 500 !important; }
+        .leaflet-control-zoom a:hover { background: #f8fafc !important; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Overlay -->
+    <div class="glass-panel header-panel">
+        <h2>🚦 Traffic Control</h2>
+        <p>Bengaluru Smart Routing & Signal Optimization Interface.</p>
+        <div class="stat-grid">
+            <div class="stat-box">
+                <span class="stat-value">66</span>
+                <span class="stat-label">Active Nodes</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value choked">0</span>
+                <span class="stat-label">Critical Chokes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Sidebar -->
+    <div class="glass-panel sidebar">
+        <div class="sidebar-header">
+            <span>Network Directory</span>
+            <button class="filter-btn" id="filterChokeBtn" onclick="toggleChokes()">⚠️ Show Choked</button>
+        </div>
+        <div class="sidebar-list" id="sidebarList">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+    
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map', { zoomControl: false }).setView([12.9716, 77.5946], 12);
+        L.control.zoom({ position: 'topright' }).addTo(map);
+        
+        // CartoDB Voyager - Premium Light Map Base
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }).addTo(map);
+
+        var junctions = [{"id": 1, "name": "airport near_MANIPALHOSPITALJUNCTION_AIRPORTPOLICESTA", "svg_file": "SVG renderer/airport near_MANIPALHOSPITALJUNCTION_AIRPORTPOLICESTA.svg", "lat": 12.963964670955445, "lon": 77.64485367258008, "choked": false, "peak_hrs": "07:30 - 10:30"}, {"id": 2, "name": "aish_jcn_AISHWARYA_JUNCTION_7thMn_1stBlockKoraman", "svg_file": "SVG renderer/aish_jcn_AISHWARYA_JUNCTION_7thMn_1stBlockKoraman.svg", "lat": 12.983629163721805, "lon": 77.65558191368098, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 3, "name": "ashok nagar 2_NANJAPPACIRCLEJUNCTION_ASHOKNAGARPOLICES", "svg_file": "SVG renderer/ashok nagar 2_NANJAPPACIRCLEJUNCTION_ASHOKNAGARPOLICES.svg", "lat": 12.96250766186155, "lon": 77.59264522730452, "choked": false, "peak_hrs": "09:00 - 12:00"}, {"id": 4, "name": "ashok nagar_RICHMONDCIRCLEJUNCTION_ASHOKNAGARPOLICES", "svg_file": "SVG renderer/ashok nagar_RICHMONDCIRCLEJUNCTION_ASHOKNAGARPOLICES.svg", "lat": 12.963856418589149, "lon": 77.59390132786797, "choked": false, "peak_hrs": "16:00 - 21:00"}, {"id": 5, "name": "basvangudi 3_KAMMANAHALLI_JUNCTION_BANASAVADIPOLICEST", "svg_file": "SVG renderer/basvangudi 3_KAMMANAHALLI_JUNCTION_BANASAVADIPOLICEST.svg", "lat": 13.003577278101607, "lon": 77.638875207242, "choked": false, "peak_hrs": "08:30 - 20:30"}, {"id": 6, "name": "BDA,Korm_BDAJUNCTION_ADUGODITRAFFICPOLICESTATION", "svg_file": "SVG renderer/BDA,Korm_BDAJUNCTION_ADUGODITRAFFICPOLICESTATION.svg", "lat": 12.946110735190075, "lon": 77.6082448637615, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 7, "name": "bglr central_BANGALOREBODYBUILDERSJUNCTION_CENTRAL_PO", "svg_file": "SVG renderer/bglr central_BANGALOREBODYBUILDERSJUNCTION_CENTRAL_PO.svg", "lat": 12.963231883165015, "lon": 77.57798725857218, "choked": false, "peak_hrs": "16:00 - 20:00"}, {"id": 8, "name": "bglr central_MEDICALCOLLEGECIRCLEJUNCTION_CENTRALPOLI", "svg_file": "SVG renderer/bglr central_MEDICALCOLLEGECIRCLEJUNCTION_CENTRALPOLI.svg", "lat": 12.95665092336241, "lon": 77.57227119339127, "choked": false, "peak_hrs": "16:00 - 20:00"}, {"id": 9, "name": "blood bank circle, ulsoor_BLOODBANKCIRCLEJUNCTION_ULSOORGATEPOLICE", "svg_file": "SVG renderer/blood bank circle, ulsoor_BLOODBANKCIRCLEJUNCTION_ULSOORGATEPOLICE.svg", "lat": 12.977272655942885, "lon": 77.58759926391059, "choked": false, "peak_hrs": "16:00 - 21:00"}, {"id": 10, "name": "blood bank circle, ulsoor_DEVANGAHOSTELJUNCTION_ULSOORGATEPOLICEST", "svg_file": "SVG renderer/blood bank circle, ulsoor_DEVANGAHOSTELJUNCTION_ULSOORGATEPOLICEST.svg", "lat": 12.972276953828652, "lon": 77.58367059790342, "choked": false, "peak_hrs": "16:00 - 21:00"}, {"id": 11, "name": "Bnsk 1_ATTIMOBBEJUNCTION_BANASHANKARIPOLICESTAT", "svg_file": "SVG renderer/Bnsk 1_ATTIMOBBEJUNCTION_BANASHANKARIPOLICESTAT.svg", "lat": 12.924583264767254, "lon": 77.55076937335248, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 12, "name": "bnsk 2_KATRIGUPPEJUNCTION_BANASHANKARIPOLICESTA", "svg_file": "SVG renderer/bnsk 2_KATRIGUPPEJUNCTION_BANASHANKARIPOLICESTA.svg", "lat": 12.923094216025563, "lon": 77.54588440672892, "choked": false, "peak_hrs": "17:00 - 21:00"}, {"id": 13, "name": "Bnsk 3_K_R_ROAD_JUNCTION_NEARJSS__BANASHANKARIP", "svg_file": "SVG renderer/Bnsk 3_K_R_ROAD_JUNCTION_NEARJSS__BANASHANKARIP.svg", "lat": 12.924373535953936, "lon": 77.54901968814568, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 14, "name": "chnadrika jcn_Junction_3", "svg_file": "SVG renderer/chnadrika jcn_Junction_3.svg", "lat": 13.025697254424019, "lon": 77.63057969464974, "choked": false, "peak_hrs": "17:00 - 19:30"}, {"id": 15, "name": "chnadrika jcn_NANJAPPACIRCLE_VIDYARANYAPURA_JUNCTION_H", "svg_file": "SVG renderer/chnadrika jcn_NANJAPPACIRCLE_VIDYARANYAPURA_JUNCTION_H.svg", "lat": 13.00828849187154, "lon": 77.64924920388937, "choked": false, "peak_hrs": "17:00 - 19:30"}, {"id": 16, "name": "cubbon park_DEVANAHALLICROSS_BYPASSCROSS_JUNCTION_DE", "svg_file": "SVG renderer/cubbon park_DEVANAHALLICROSS_BYPASSCROSS_JUNCTION_DE.svg", "lat": 12.972920165485231, "lon": 77.59926941931148, "choked": false, "peak_hrs": "07:00 - 23:00"}, {"id": 17, "name": "cubbon park_SIDDALINGAIAHJUNCTION_CUBBONPARKPOLICEST", "svg_file": "SVG renderer/cubbon park_SIDDALINGAIAHJUNCTION_CUBBONPARKPOLICEST.svg", "lat": 12.970440140456732, "lon": 77.59864682550999, "choked": false, "peak_hrs": "07:00 - 23:00"}, {"id": 18, "name": "EC-wipro_HENNURROAD_DAVISROADJUNCTION_FRAZERTOWNP", "svg_file": "SVG renderer/EC-wipro_HENNURROAD_DAVISROADJUNCTION_FRAZERTOWNP.svg", "lat": 12.99985472702722, "lon": 77.61762669147588, "choked": false, "peak_hrs": "11:30 - 17:00"}, {"id": 19, "name": "EC-wipro_WIPROJUNCTION_ELECTRONICCITYPOLICESTATIO", "svg_file": "SVG renderer/EC-wipro_WIPROJUNCTION_ELECTRONICCITYPOLICESTATIO.svg", "lat": 12.848633525373918, "lon": 77.65941301231504, "choked": false, "peak_hrs": "11:30 - 17:00"}, {"id": 20, "name": "Elite Jcn_Junction_1", "svg_file": "SVG renderer/Elite Jcn_Junction_1.svg", "lat": 12.931420766984687, "lon": 77.57494435958084, "choked": false, "peak_hrs": "16:00 - 23:00"}, {"id": 21, "name": "Elite Jcn_Junction_2", "svg_file": "SVG renderer/Elite Jcn_Junction_2.svg", "lat": 12.920895399076864, "lon": 77.6392773571903, "choked": false, "peak_hrs": "16:00 - 23:00"}, {"id": 22, "name": "gurugunta palya_Junction_1", "svg_file": "SVG renderer/gurugunta palya_Junction_1.svg", "lat": 13.02546110911864, "lon": 77.54030749393442, "choked": false, "peak_hrs": "08:00 - 21:00"}, {"id": 23, "name": "gurugunta palya_Junction_7", "svg_file": "SVG renderer/gurugunta palya_Junction_7.svg", "lat": 13.023718574110665, "lon": 77.54323975921895, "choked": false, "peak_hrs": "08:00 - 21:00"}, {"id": 24, "name": "Hains jcn- shivaji nagar_HAINSJUNCTION__SHIVAJINAGARPOLICESTATION", "svg_file": "SVG renderer/Hains jcn- shivaji nagar_HAINSJUNCTION__SHIVAJINAGARPOLICESTATION.svg", "lat": 12.98794181738066, "lon": 77.60894672082699, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 25, "name": "Hains jcn- shivaji nagar_Junction_2", "svg_file": "SVG renderer/Hains jcn- shivaji nagar_Junction_2.svg", "lat": 13.014801256614623, "lon": 77.64625312586016, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 26, "name": "hope farm-wh fld_HOPEFARMJUNCTION_WHITEFIELDPOLICESTATION", "svg_file": "SVG renderer/hope farm-wh fld_HOPEFARMJUNCTION_WHITEFIELDPOLICESTATION.svg", "lat": 12.98194189514401, "lon": 77.7495054871685, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 27, "name": "hope farm-wh fld_KUNDENAHALLIGATEJUNCTION_WHITEFIELDPOLIC", "svg_file": "SVG renderer/hope farm-wh fld_KUNDENAHALLIGATEJUNCTION_WHITEFIELDPOLIC.svg", "lat": 12.979470160162053, "lon": 77.74614922696173, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 28, "name": "hosk, hitmadu_ITTAMADUJUNCTION_BANASHANKARIPOLICESTATI", "svg_file": "SVG renderer/hosk, hitmadu_ITTAMADUJUNCTION_BANASHANKARIPOLICESTATI.svg", "lat": 12.922993253748439, "lon": 77.54398213496178, "choked": false, "peak_hrs": "16:00 - 21:00"}, {"id": 29, "name": "indranagar_Junction_3", "svg_file": "SVG renderer/indranagar_Junction_3.svg", "lat": 12.975747836885462, "lon": 77.64075585542155, "choked": false, "peak_hrs": "08:30 - 11:30"}, {"id": 30, "name": "indranagar_SUBEDHARCHATRAMROADJUNCTION_NEARSHESHADR", "svg_file": "SVG renderer/indranagar_SUBEDHARCHATRAMROADJUNCTION_NEARSHESHADR.svg", "lat": 12.975710047655532, "lon": 77.64328652423944, "choked": false, "peak_hrs": "08:30 - 11:30"}, {"id": 31, "name": "isro jcn, airport_KADUBEESANAHALLIJUNCTION_AIRPORTPOLICEST", "svg_file": "SVG renderer/isro jcn, airport_KADUBEESANAHALLIJUNCTION_AIRPORTPOLICEST.svg", "lat": 12.956584619237299, "lon": 77.63946789540162, "choked": false, "peak_hrs": "08:30 - 11:30"}, {"id": 32, "name": "jaynagar 1_CANARABANKJUNCTION_JAYANAGAR27THCROSS_9T", "svg_file": "SVG renderer/jaynagar 1_CANARABANKJUNCTION_JAYANAGAR27THCROSS_9T.svg", "lat": 12.918163307825848, "lon": 77.59622917423874, "choked": false, "peak_hrs": "17:00 - 23:00"}, {"id": 33, "name": "jaynagar 1_Junction_3", "svg_file": "SVG renderer/jaynagar 1_Junction_3.svg", "lat": 12.913721002083298, "lon": 77.67113614946054, "choked": false, "peak_hrs": "17:00 - 23:00"}, {"id": 34, "name": "Jhonson Market_JOHNSONMARKETJUNCTION_ASHOKNAGARPOLICEST", "svg_file": "SVG renderer/Jhonson Market_JOHNSONMARKETJUNCTION_ASHOKNAGARPOLICEST.svg", "lat": 12.960489016891458, "lon": 77.60359130337903, "choked": false, "peak_hrs": "08:30 - 12:00"}, {"id": 35, "name": "kamakshipalya_Junction_2", "svg_file": "SVG renderer/kamakshipalya_Junction_2.svg", "lat": 12.922409622989784, "lon": 77.60178081148331, "choked": false, "peak_hrs": "17:00 - 20:00"}, {"id": 36, "name": "kengiri bus_Junction_1", "svg_file": "SVG renderer/kengiri bus_Junction_1.svg", "lat": 12.932068161606246, "lon": 77.65778245401683, "choked": false, "peak_hrs": "09:00 - 22:00"}, {"id": 37, "name": "Kr market_K_R_MARKET_JUNCTION__K_R_MARKET_POLICEST", "svg_file": "SVG renderer/Kr market_K_R_MARKET_JUNCTION__K_R_MARKET_POLICEST.svg", "lat": 12.965784189461049, "lon": 77.57756379882696, "choked": false, "peak_hrs": "09:00 - 11:00"}, {"id": 38, "name": "Kr market_MINER", "svg_file": "SVG renderer/Kr market_MINER.svg", "lat": 12.966133756455925, "lon": 77.64348633099527, "choked": false, "peak_hrs": "09:00 - 11:00"}, {"id": 39, "name": "KR puram police station_HOODIJUNCTION__K_R_PURAM_POLICESTATION", "svg_file": "SVG renderer/KR puram police station_HOODIJUNCTION__K_R_PURAM_POLICESTATION.svg", "lat": 12.995664609947601, "lon": 77.71349657583896, "choked": false, "peak_hrs": "07:00 - 23:00"}, {"id": 40, "name": "KR puram police station_RAMAMURTHYNAGARJUNCTION__K_R_PURAMPOLICE", "svg_file": "SVG renderer/KR puram police station_RAMAMURTHYNAGARJUNCTION__K_R_PURAMPOLICE.svg", "lat": 13.016066730769925, "lon": 77.679354427055, "choked": false, "peak_hrs": "07:00 - 23:00"}, {"id": 41, "name": "lalbagh, national clg_NATIONALCOLLEGE_JUNCTION_BASAVANAGUDIPOL", "svg_file": "SVG renderer/lalbagh, national clg_NATIONALCOLLEGE_JUNCTION_BASAVANAGUDIPOL.svg", "lat": 12.98050009376798, "lon": 77.60910630475985, "choked": false, "peak_hrs": "22:00 - 23:00"}, {"id": 42, "name": "madiwala_AUTOMARTJUNCTION_MADIWALAPOLICESTATION", "svg_file": "SVG renderer/madiwala_AUTOMARTJUNCTION_MADIWALAPOLICESTATION.svg", "lat": 12.923927513350852, "lon": 77.61520515883987, "choked": false, "peak_hrs": "08:30 - 11:00"}, {"id": 43, "name": "magadi_DR_RAJKUMARROAD_10THCROSSJUNCTION__MALLE", "svg_file": "SVG renderer/magadi_DR_RAJKUMARROAD_10THCROSSJUNCTION__MALLE.svg", "lat": 13.022882054337066, "lon": 77.56580513202566, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 44, "name": "magadi_PRASANNAJUNCTION__MAGADIROADPOLICESTATIO", "svg_file": "SVG renderer/magadi_PRASANNAJUNCTION__MAGADIROADPOLICESTATIO.svg", "lat": 12.973661234921572, "lon": 77.57729792115525, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 45, "name": "mahalakshmi layout_ESIHOSPITAL_RAJAJINAGARJUNCTION__RAJAJIN", "svg_file": "SVG renderer/mahalakshmi layout_ESIHOSPITAL_RAJAJINAGARJUNCTION__RAJAJIN.svg", "lat": 13.022745907682621, "lon": 77.5344961908648, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 46, "name": "Malleshwaram_28THMAINJAYANAGAR9THBLOCKJUNCTION__MICOL", "svg_file": "SVG renderer/Malleshwaram_28THMAINJAYANAGAR9THBLOCKJUNCTION__MICOL.svg", "lat": 12.912867596154578, "lon": 77.59829596056147, "choked": false, "peak_hrs": "16:00 - 21:00"}, {"id": 47, "name": "manipal hsptl_KUVEMPUCIRCLEJUNCTION_HALMAINGATE_AIRPOR", "svg_file": "SVG renderer/manipal hsptl_KUVEMPUCIRCLEJUNCTION_HALMAINGATE_AIRPOR.svg", "lat": 12.920427547759695, "lon": 77.57364853172555, "choked": false, "peak_hrs": "07:30 - 10:30"}, {"id": 48, "name": "Marhatalli, Yalmur_YAMALURJUNCTION_AIRPORTPOLICESTATION", "svg_file": "SVG renderer/Marhatalli, Yalmur_YAMALURJUNCTION_AIRPORTPOLICESTATION.svg", "lat": 12.9420277906461, "lon": 77.6845828241565, "choked": false, "peak_hrs": "08:00 - 11:30"}, {"id": 49, "name": "MICO layout_29THBTMROADJUNCTION__MICOLAYOUTPOLICESTA", "svg_file": "SVG renderer/MICO layout_29THBTMROADJUNCTION__MICOLAYOUTPOLICESTA.svg", "lat": 12.913166426517988, "lon": 77.59880508203547, "choked": false, "peak_hrs": "11:00 - 17:00"}, {"id": 50, "name": "MSR- yeshwantapur_KUVEMPUCIRCLE_BELJUNCTION_YESHVANTAPURPO", "svg_file": "SVG renderer/MSR- yeshwantapur_KUVEMPUCIRCLE_BELJUNCTION_YESHVANTAPURPO.svg", "lat": 13.032835832146347, "lon": 77.5592585167861, "choked": false, "peak_hrs": "17:00 - 21:00"}, {"id": 51, "name": "MSR- yeshwantapur_M_S_RAMAIAHJUCTION_TOLLGATE_JUNCTION_YES", "svg_file": "SVG renderer/MSR- yeshwantapur_M_S_RAMAIAHJUCTION_TOLLGATE_JUNCTION_YES.svg", "lat": 12.945978743487942, "lon": 77.5233447108834, "choked": false, "peak_hrs": "17:00 - 21:00"}, {"id": 52, "name": "mys rd_HOYSALACIRCLEKENGERIUPANAGARJUNCTION_BYA", "svg_file": "SVG renderer/mys rd_HOYSALACIRCLEKENGERIUPANAGARJUNCTION_BYA.svg", "lat": 12.915883042137017, "lon": 77.47879767037355, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 53, "name": "mys rd_KIMCOJUNCTION_MYSOREROAD__BYATARAYANAPUR", "svg_file": "SVG renderer/mys rd_KIMCOJUNCTION_MYSOREROAD__BYATARAYANAPUR.svg", "lat": 12.917655742462783, "lon": 77.65351498518284, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 54, "name": "nagarbhavi_SHANKARMUTTCIRCLE_VIJAYANAGAR_JUNCTION_V", "svg_file": "SVG renderer/nagarbhavi_SHANKARMUTTCIRCLE_VIJAYANAGAR_JUNCTION_V.svg", "lat": 12.91765007853449, "lon": 77.59108020389533, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 55, "name": "peenya_14THCROSSPEENYAJUNCTION__PEENYAPOLICESTA", "svg_file": "SVG renderer/peenya_14THCROSSPEENYAJUNCTION__PEENYAPOLICESTA.svg", "lat": 13.030719044932253, "lon": 77.52427886189462, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 56, "name": "peenya_BAGALGUNTEJUNCTION__PEENYAPOLICESTATION", "svg_file": "SVG renderer/peenya_BAGALGUNTEJUNCTION__PEENYAPOLICESTATION.svg", "lat": 13.029984272000853, "lon": 77.52018469771627, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 57, "name": "Rajajinagar_FTIJUNCTION_KANTEERAVASTUDIO___RAJAJINAG", "svg_file": "SVG renderer/Rajajinagar_FTIJUNCTION_KANTEERAVASTUDIO___RAJAJINAG.svg", "lat": 13.017297923395773, "lon": 77.54149512119191, "choked": false, "peak_hrs": "16:30 - 20:30"}, {"id": 58, "name": "Rajajinagar_MAHALAXMIENTRANCEJUNCTION__RAJAJINAGARPO", "svg_file": "SVG renderer/Rajajinagar_MAHALAXMIENTRANCEJUNCTION__RAJAJINAGARPO.svg", "lat": 13.015966518099802, "lon": 77.53675259910253, "choked": false, "peak_hrs": "16:30 - 20:30"}, {"id": 59, "name": "rammaih_TAMARIKANNANJUNCTION_ULSOORPOLICESTATION", "svg_file": "SVG renderer/rammaih_TAMARIKANNANJUNCTION_ULSOORPOLICESTATION.svg", "lat": 12.97054758650601, "lon": 77.58802899322643, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 60, "name": "RGV gate, korm 80 ft_SONYWORLD_KORAMANGALA80FT_RD__JUNCTION_A", "svg_file": "SVG renderer/RGV gate, korm 80 ft_SONYWORLD_KORAMANGALA80FT_RD__JUNCTION_A.svg", "lat": 12.941596291384181, "lon": 77.63111565402254, "choked": false, "peak_hrs": "17:00 - 21:00"}, {"id": 61, "name": "RT nagar_GULABIJUNCTION__R_T_NAGARPOLICESTATION", "svg_file": "SVG renderer/RT nagar_GULABIJUNCTION__R_T_NAGARPOLICESTATION.svg", "lat": 13.026916936012833, "lon": 77.59168543336497, "choked": false, "peak_hrs": "08:00 - 11:00"}, {"id": 62, "name": "sadashiv nagar_COLESPARK_JUNCTION__SHIVAJINAGARPOLICEST", "svg_file": "SVG renderer/sadashiv nagar_COLESPARK_JUNCTION__SHIVAJINAGARPOLICEST.svg", "lat": 12.987209871966595, "lon": 77.60394450771186, "choked": false, "peak_hrs": "16:00 - 20:00"}, {"id": 63, "name": "Shivaji nagar_TYAGIHENAGALAVARAYANJUNCTION_DICKENSONRD", "svg_file": "SVG renderer/Shivaji nagar_TYAGIHENAGALAVARAYANJUNCTION_DICKENSONRD.svg", "lat": 12.97747783740228, "lon": 77.61496966030728, "choked": false, "peak_hrs": "10:00 - 12:00"}, {"id": 64, "name": "vijay nagar_SHIVANAHALLIJUNCTION__WOCROAD_VIJAYANAGA", "svg_file": "SVG renderer/vijay nagar_SHIVANAHALLIJUNCTION__WOCROAD_VIJAYANAGA.svg", "lat": 12.97636344567793, "lon": 77.51735515045512, "choked": false, "peak_hrs": "08:00 - 12:00"}, {"id": 65, "name": "Wilson garden_K_H_JUNCTION_WILSONGARDENPOLICESTATION", "svg_file": "SVG renderer/Wilson garden_K_H_JUNCTION_WILSONGARDENPOLICESTATION.svg", "lat": 12.950745474585922, "lon": 77.5990590951442, "choked": false, "peak_hrs": "08:30 - 11:00"}, {"id": 66, "name": "yelahanka 1_YELAHANKACIRCLEJUNCTION_YELAHANKAPOLICES", "svg_file": "SVG renderer/yelahanka 1_YELAHANKACIRCLEJUNCTION_YELAHANKAPOLICES.svg", "lat": 13.032578040671455, "lon": 77.601556724648, "choked": false, "peak_hrs": "16:00 - 20:00"}];
+        var markers = [];
+        var sidebarEl = document.getElementById('sidebarList');
+        var showingOnlyChoked = false;
+
+        var normalIcon = L.divIcon({
+            className: 'custom-marker-wrapper',
+            html: '<div class="custom-marker"></div>',
+            iconSize: [20, 20], iconAnchor: [10, 10], popupAnchor: [0, -10]
+        });
+
+        var chokedIcon = L.divIcon({
+            className: 'custom-marker-wrapper',
+            html: '<div class="custom-marker choked"></div>',
+            iconSize: [20, 20], iconAnchor: [10, 10], popupAnchor: [0, -10]
+        });
+
+        function renderList() {
+            sidebarEl.innerHTML = '';
+            
+            junctions.forEach(function(jn, idx) {
+                if (showingOnlyChoked && !jn.choked) return;
+
+                var shortTitle = jn.name;
+                if(shortTitle.includes("_")) {
+                    var parts = shortTitle.split("_");
+                    shortTitle = parts.length > 1 ? parts[1].replace(/([A-Z])/g, ' $1').trim() : parts[0];
+                }
+                
+                if(!markers[idx]) {
+                    var marker = L.marker([jn.lat, jn.lon], { 
+                        icon: jn.choked ? chokedIcon : normalIcon 
+                    }).addTo(map);
+                    
+                    var popupContent = `
+                        <div class="popup-header">
+                            <span class="popup-title">${shortTitle}</span>
+                            <span class="badge ${jn.choked ? 'choked' : 'ok'}">${jn.choked ? '⚠ CRITICAL CHOKE' : '✓ OPTIMAL'}</span>
+                        </div>
+                        <object type="image/svg+xml" data="${jn.svg_file}">Error loading SVG.</object>
+                    `;
+                    marker.bindPopup(popupContent, { maxWidth: 920, minWidth: 900 });
+                    markers[idx] = marker;
+                }
+                
+                var item = document.createElement('div');
+                item.className = 'junction-item';
+                var badgeHtml = jn.choked ? '<span class="badge choked">Choked</span>' : '<span class="badge ok">Optimal</span>';
+                
+                item.innerHTML = `
+                    <div class="item-header">
+                        <div class="jcn-name-text">${shortTitle}</div>
+                        ${badgeHtml}
+                    </div>
+                    <div class="item-details">
+                        <span><span class="peak-icon">⏱️</span> Peak: ${jn.peak_hrs}</span>
+                    </div>
+                `;
+                item.onclick = function() {
+                    map.flyTo([jn.lat, jn.lon], 15, { duration: 1.5 });
+                    setTimeout(() => markers[idx].openPopup(), 1500);
+                };
+                sidebarEl.appendChild(item);
+            });
+        }
+
+        function toggleChokes() {
+            showingOnlyChoked = !showingOnlyChoked;
+            var btn = document.getElementById('filterChokeBtn');
+            if (showingOnlyChoked) {
+                btn.classList.add('active');
+                btn.innerText = "Show All";
+                // Hide non-choked markers
+                junctions.forEach((jn, idx) => { if(!jn.choked && markers[idx]) map.removeLayer(markers[idx]); });
+            } else {
+                btn.classList.remove('active');
+                btn.innerText = "⚠️ Show Choked";
+                // Show all markers
+                junctions.forEach((jn, idx) => { if(!jn.choked && markers[idx]) markers[idx].addTo(map); });
+            }
+            renderList();
+        }
+
+        renderList();
+    </script>
+</body>
+</html>

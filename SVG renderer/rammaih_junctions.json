@@ -1,0 +1,84 @@
+{
+  "junctions": [
+    {
+      "id": 1,
+      "name": "TAMARIKANNANJUNCTION,ULSOORPOLICESTATION",
+      "control": "FIXED",
+      "canvas": {
+        "width": 900,
+        "height": 560,
+        "cx": 450,
+        "cy": 280
+      },
+      "approaches": [
+        {
+          "leg": "A",
+          "from": "ULSOR",
+          "direction": "?",
+          "movements": [
+            "R",
+            "S",
+            "S",
+            "S",
+            "L",
+            "R",
+            "S"
+          ],
+          "angle_deg": 0,
+          "cx": 615,
+          "cy": 280
+        },
+        {
+          "leg": "B",
+          "from": "ANJANEYAJN",
+          "direction": "?",
+          "movements": [
+            "L",
+            "S"
+          ],
+          "angle_deg": 90,
+          "cx": 450,
+          "cy": 115
+        }
+      ],
+      "timings": [
+        {
+          "from_time": "07:00",
+          "to_time": "08:00",
+          "phase_greens": [
+            {
+              "weekday": 75,
+              "sunday": 75
+            }
+          ],
+          "ped_phase": {
+            "weekday": 60,
+            "sunday": 60
+          },
+          "cycle_time": {
+            "weekday": 143,
+            "sunday": 143
+          }
+        },
+        {
+          "from_time": "08:00",
+          "to_time": "12:00",
+          "phase_greens": [
+            {
+              "weekday": 80,
+              "sunday": 80
+            }
+          ],
+          "ped_phase": {
+            "weekday": 70,
+            "sunday": 70
+          },
+          "cycle_time": {
+            "weekday": 160,
+            "sunday": 160
+          }
+        }
+      ]
+    }
+  ]
+}
