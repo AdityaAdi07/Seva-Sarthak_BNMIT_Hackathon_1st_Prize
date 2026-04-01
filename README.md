@@ -12,6 +12,15 @@ Seva Sarthak is a high-fidelity, interactive digital twin platform designed to o
 - **Dynamic Design System**: Premium, dark-mode-first aesthetic with a global theme toggle and glassmorphism-inspired UI components.
 - **Data-Driven Insights**: Powered by historical Bengaluru traffic datasets and real-time processing scripts.
 
+## Gallery
+<img width="1919" height="963" alt="Screenshot 2026-03-27 133617" src="https://github.com/user-attachments/assets/4cd329bb-118a-474c-a9fb-5d2efe767e2a" />
+<img width="1908" height="943" alt="Screenshot 2026-03-27 133535" src="https://github.com/user-attachments/assets/2b8c40fd-9699-44c2-b651-b90d4604469d" />
+<img width="1778" height="884" alt="Screenshot 2026-03-27 133729" src="https://github.com/user-attachments/assets/9bcafe57-647e-4833-9977-000728a4c509" />
+<img width="709" height="888" alt="Screenshot 2026-03-25 114502" src="https://github.com/user-attachments/assets/94c9c154-36d1-4ca7-be63-b19d62806996" />
+<img width="1898" height="961" alt="Screenshot 2026-03-27 123931" src="https://github.com/user-attachments/assets/3c91539a-b4ff-4da5-96b0-f5534f08cb11" />
+<img width="1866" height="970" alt="Screenshot 2026-03-27 124052" src="https://github.com/user-attachments/assets/5469060f-9b85-4126-bfc2-597162993f4a" />
+
+
 ## 🛠️ Technology Stack
 
 - **Frontend**: React 19, Vite, Leaflet, React-Leaflet, Lucide-React
